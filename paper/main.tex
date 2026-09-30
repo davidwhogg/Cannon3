@@ -9,6 +9,10 @@
 \newcommand{\semicolon}{\,;\,}
 \newcommand{\given}{\,|\,}
 
+% collaboration
+\usepackage{xcolor}
+\newcommand{\hogg}[1]{\textbf{\color{blue} Hogg say: #1}}
+
 \title{\bfseries The residual Cannon}
 \author{Hogg for Panteleeva and Casey and others}
 \date{2026 September}
@@ -16,13 +20,18 @@
 
 \maketitle
 
+\section{Introduction}
+Stuff and things.
+
 \section{Assumptions and choices}
 \paragraph{Data:}
-We have $N$ stellar spectra $y_i$, each of which is an ordered list of $M$ pseudo-continuum-normalized pixel measurements on a standard rest-frame wavelength grid.
-Each pixel $y_{ij}$ of spectrum $y_i$, which corresponds to some rest-frame wavelength $\lambda_j$ has an associated weight or uncertainty inverse variance $\sigma^{-2}_{ij}$.
+We have $N$ stellar spectra $y_i$ ($1\leq i\leq N$), each of which is an ordered list of $M$ pseudo-continuum-normalized pixel measurements on a standard rest-frame wavelength grid.
+Each pixel $y_{ij}$ ($1\leq j\leq M$) of spectrum $y_i$, which corresponds to some rest-frame wavelength $\lambda_j$ has an associated weight or uncertainty inverse variance $\sigma^{-2}_{ij}$.
 Fundamentally we are going to assume that these data are ``correct'' in most relevant ways:
 They are correctly pseudo-continuum normalized, they have been correctly extracted onto a standardized rest-frame wavelength grid, their Doppler shifts are correctly known and accounted for, and the uncertainty estimates are reasonable (for most pixels of most spectra).
 That is, we are not going to Doppler shift our models; we are going to assume that the data have been Doppler shifted at extraction time (or---gasp---interpolated) to the rest frame.
+
+These data are rectangular, but we won't assume that they are complete:
 There might be missing or masked data, these measurements are simply given vanishing inverse uncertainty variances $\sigma^{-2}_{ij}$ such that they will have no weight in anything we do below.
 
 \paragraph{Physical model:}
@@ -43,8 +52,31 @@ $s_{ij}$ is a residual,
 and $p(s\given\sigma^{-2})$ is a noise distribution or pdf parameterized by the inverse variance.
 In detail we are going to assume that $g(\theta\semicolon W)$ is a quadratic function of the parameters $\theta$ and a linear function of the weights $W$.
 
+Because $s_{ij}$ depends on the data $y_{ij}$ deterministically (once $\theta_i$ and $W_j$ are set), it is this noise model $p(s\given\sigma^{-2})$ that creates a likelihood function.
+In detail, the log likelihood function $L$ is just
+\begin{align}
+    L &= \sum_{i=1}^N\sum_{j=1}^M \ln p(s_{ij}\given\sigma^{-2}_{ij}) ~.
+\end{align}
+This likelihood $L$ is implicitly a function of all the $\theta_i$ and all the $W_j$.
+
 \paragraph{Noise model:}
+The simplest choice for the noise model $p(s\given\sigma^{-2})$ is a zero-mean Gaussian of inverse variance $\sigma^{-2}$.
+We expect there to be bad stars, bad pixels, and bad wavelengths, such that we probably want something more robust than this---robust in the sense of being less sensitive to outliers.
+We will probably choose the \hogg{What should we say here, technically, to match the choices in RHMF?}
 
 \paragraph{Parameters:}
+
+\paragraph{Implementation details:}
+\hogg{There is a schedule of optimization and update steps.}
+
+\hogg{We implement the maximum-likelihood with IRLS.}
+
+\hogg{Everything works in map--reduce form so it is resource-efficient.}
+
+\hogg{Note that with these choices, we never have to do ``inference'' with The Cannon. We only ever set the weights! The only inverse problem we ever solve is the Korg parameter-inference step.}
+
+\section{Experiments and results}
+
+\section{Discussion}
 
 \end{document}
