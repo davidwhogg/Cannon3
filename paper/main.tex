@@ -13,7 +13,7 @@
 \usepackage{xcolor}
 \newcommand{\hogg}[1]{\textbf{\color{blue} Hogg say: #1}}
 
-\title{\bfseries The residual Cannon}
+\title{\bfseries The Cannon 3: A self-supervised hybrid physics-driven and data-driven model for stellar spectra}
 \author{Hogg for Panteleeva and Casey and others}
 \date{2026 September}
 \begin{document}
@@ -47,17 +47,17 @@ Concretely, we will assume
     y_{ij} &= f(\lambda_j\semicolon\theta_i) + g(\theta_i\semicolon W_j) + s_{ij} \\
     s_{ij} &\sim p(s\given\sigma^{-2}_{ij}) ~,
 \end{align}
-where $g(\theta\semicolon W)$ is a smooth function of parameters $\theta$, governed by a set of coefficients or weights $W_{j}$ that are unique to each pixel $j$,
+where $g(\theta_i\semicolon W_j)$ is a smooth function of parameters $\theta$, governed by a set of coefficients or weights $W_{j}$ that are unique to each pixel $j$,
 $s_{ij}$ is a residual,
 and $p(s\given\sigma^{-2})$ is a noise distribution or pdf parameterized by the inverse variance.
 In detail we are going to assume that $g(\theta\semicolon W)$ is a quadratic function of the parameters $\theta$ and a linear function of the weights $W$.
 
-Because $s_{ij}$ depends on the data $y_{ij}$ deterministically (once $\theta_i$ and $W_j$ are set), it is this noise model $p(s\given\sigma^{-2})$ that creates a likelihood function.
+Because $s_{ij}$ depends on the data $y_{ij}$ deterministically once $\theta_i$ and $W_j$ are set, it is this noise model $p(s\given\sigma^{-2})$ that creates a likelihood function.
 In detail, the log likelihood function $L$ is just
 \begin{align}
     L &= \sum_{i=1}^N\sum_{j=1}^M \ln p(s_{ij}\given\sigma^{-2}_{ij}) ~.
 \end{align}
-This likelihood $L$ is implicitly a function of all the $\theta_i$ and all the $W_j$.
+This likelihood $L$ is implicitly a function of all the $\theta_i$ and all the $W_j$, because the $s_{ij}$ are.
 
 \paragraph{Noise model:}
 The simplest choice for the noise model $p(s\given\sigma^{-2})$ is a zero-mean Gaussian of inverse variance $\sigma^{-2}$.
@@ -65,6 +65,7 @@ We expect there to be bad stars, bad pixels, and bad wavelengths, such that we p
 We will probably choose the \hogg{What should we say here, technically, to match the choices in RHMF?}
 
 \paragraph{Parameters:}
+\hogg{Andy: I think you have feelings about the best list of parameters for us to be using.}
 
 \paragraph{Implementation details:}
 \hogg{There is a schedule of optimization and update steps.}
