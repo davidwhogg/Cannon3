@@ -1,0 +1,50 @@
+\documentclass{article}
+
+% typesetting
+\usepackage[letterpaper, textwidth=5.5in, textheight=9.0in]{geometry}
+\frenchspacing
+
+% mathematics
+\usepackage{amsmath}
+\newcommand{\semicolon}{\,;\,}
+\newcommand{\given}{\,|\,}
+
+\title{\bfseries The residual Cannon}
+\author{Hogg for Panteleeva and Casey and others}
+\date{2026 September}
+\begin{document}
+
+\maketitle
+
+\section{Assumptions and choices}
+\paragraph{Data:}
+We have $N$ stellar spectra $y_i$, each of which is an ordered list of $M$ pseudo-continuum-normalized pixel measurements on a standard rest-frame wavelength grid.
+Each pixel $y_{ij}$ of spectrum $y_i$, which corresponds to some rest-frame wavelength $\lambda_j$ has an associated weight or uncertainty inverse variance $\sigma^{-2}_{ij}$.
+Fundamentally we are going to assume that these data are ``correct'' in most relevant ways:
+They are correctly pseudo-continuum normalized, they have been correctly extracted onto a standardized rest-frame wavelength grid, their Doppler shifts are correctly known and accounted for, and the uncertainty estimates are reasonable (for most pixels of most spectra).
+That is, we are not going to Doppler shift our models; we are going to assume that the data have been Doppler shifted at extraction time (or---gasp---interpolated) to the rest frame.
+There might be missing or masked data, these measurements are simply given vanishing inverse uncertainty variances $\sigma^{-2}_{ij}$ such that they will have no weight in anything we do below.
+
+\paragraph{Physical model:}
+We have a physical model for stellar spectra---call it ``Korg'' maybe---which makes a prediction $f(\lambda_j\semicolon\theta_i)$ for measurement $y_{ij}$ given the wavelength $\lambda_j$ and a set of parameters (some stellar, some nuisance) $\theta_i$.
+These parameters will be specified below; they will include (at least) stellar temperature, surface gravity, and some abundances.
+This model has imperfections, but they are small.
+That is, the model does a good job of predicting most of the data, once the parameters are set well.
+
+\paragraph{Statistical model:}
+The idea is that the physical model is good but has issues, such that the differences between the physical model and the data are well described by something that is smooth in the parameters $\theta$ plus some noise.
+Concretely, we will assume
+\begin{align}
+    y_{ij} &= f(\lambda_j\semicolon\theta_i) + g(\theta_i\semicolon W_j) + s_{ij} \\
+    s_{ij} &\sim p(s\given\sigma^{-2}_{ij}) ~,
+\end{align}
+where $g(\theta\semicolon W)$ is a smooth function of parameters $\theta$, governed by a set of coefficients or weights $W_{j}$ that are unique to each pixel $j$,
+$s_{ij}$ is a residual,
+and $p(s\given\sigma^{-2})$ is a noise distribution or pdf parameterized by the inverse variance.
+In detail we are going to assume that $g()$ is a quadratic function of the parameters.
+
+\paragraph{Noise model:}
+
+\paragraph{Parameters:}
+
+\end{document}
